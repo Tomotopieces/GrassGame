@@ -33,13 +33,6 @@ Grass::Grass(Grass&& grass2)
 	grass2.~Grass();
 }
 
-Grass::Grass(const int Count)
-{
-	point = Point(rand() % ConsoleWidth, rand() % ConsoleHeight);
-	count = Count;
-	setPic();
-}
-
 Grass::Grass(const Point pos)
 	:point(pos)
 {
@@ -74,7 +67,7 @@ Grass& Grass::operator=(const Grass& grass2)
 	return*this;
 }
 
-Point Grass::getPosition()
+Point Grass::getPosition()const
 {
 	return point;
 }
@@ -97,18 +90,29 @@ const bool Grass::operator==(const Grass& grass)const
 void Grass::Draw()const
 {
 	Cursor.setPosition(point.getX(), point.getY());
-	Character.setForeColor(green);
+	Character.setForeColor(green + light);
 	std::cout << grassPic;
 }
 
-Lawn::Lawn()
-	:GameMap<Grass>(ConsoleWidth, ConsoleHeight)
+void Lawn::set0Position()
 {
+	for (int x = 0; x < getWidth(); ++x) {
+		for (int y = 0; y < getHeight(); ++y) {
+			setPoint(x, y, Grass(x, y, 0));
+		}
+	}
 }
 
-Lawn::Lawn(int grassCount)
-	:GameMap<Grass>(ConsoleWidth, ConsoleHeight)
+Lawn::Lawn(int width, int height)
+	:GameMap<Grass>(width, height)
 {
+	set0Position();
+}
+
+Lawn::Lawn(int width, int height, int grassCount)
+	:GameMap<Grass>(width, height)
+{
+	set0Position();
 	makeGrass(grassCount);
 }
 
@@ -141,11 +145,11 @@ const Lawn& Lawn::makeGrass(int grassCount)
 {
 	for (int i = 0; i < grassCount; ++i)
 	{
-		Grass grass(rand() % 2 + 1);
+		Grass grass(rand() % getWidth(), rand() % getHeight(), rand() % 2 + 1);
 		if(grassList.size())
 			for (auto it = grassList.begin(); it != grassList.end(); ++it) {
 				if (it->getPosition() == grass.getPosition()) {
-					grass.getPosition().ReSet(ConsoleWidth, ConsoleHeight);
+					grass.getPosition().ReSet(getWidth(), getHeight());
 					it = grassList.begin();
 				}
 			}

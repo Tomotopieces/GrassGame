@@ -59,7 +59,7 @@ public:
 
 	const GameMap<T>& setMap(const GameMap<T>& Map2);
 	const GameMap<T>& setPoint(const int x, const int y, const T& Data2);
-	const GameMap<T>& setPoint(const Point pos, const T& Data2);
+	const GameMap<T>& setPoint(Point pos, const T& Data2);
 };
 
 template<typename T>
@@ -153,7 +153,7 @@ const GameMap<T>& GameMap<T>::setPoint(const int x, const int y, const T& Data2)
 }
 
 template<typename T>
-const GameMap<T>& GameMap<T>::setPoint(const Point pos, const T& Data2)
+const GameMap<T>& GameMap<T>::setPoint(Point pos, const T& Data2)
 {
 	Map[pos.getX()][pos.getY()] = Data2;
 	return*this;

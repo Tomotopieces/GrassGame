@@ -135,6 +135,9 @@
     <ClInclude Include="GrassGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ConsoleFunc.dll" />
+    <None Include="GrassGame 0.1.exe" />
+    <None Include="GrassGame 0.2.exe" />
     <None Include="README.MD" />
   </ItemGroup>
   <ItemGroup>

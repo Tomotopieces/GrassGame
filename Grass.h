@@ -3,9 +3,6 @@
 #include <vector>
 #include "Game.h"
 
-const int ConsoleWidth = 64;
-const int ConsoleHeight = 18;
-
 const std::vector<std::string> GrassPic1 = { "/", "\\", "`", "~", "-", "^" };
 const std::vector<std::string> GrassPic2 = { "v", "V", "y", "Y", ">", "#" };
 
@@ -28,8 +25,6 @@ public:
 	Grass(const Grass& grass2);
 	Grass(Grass&& grass2);
 
-	// 随机地点
-	Grass(const int Count);
 	// 随机数量
 	Grass(const Point pos);
 	Grass(const int x, const int y);
@@ -38,7 +33,7 @@ public:
 	Grass(const int x, const int y, const int Count);
 	Grass& operator=(const Grass& grass2);
 
-	Point getPosition();
+	Point getPosition()const;
 	const int getCount()const;
 	const std::string getGrassPic()const;
 
@@ -50,9 +45,13 @@ public:
 class Lawn :public GameMap<Grass> {
 private:
 	std::vector<Grass> grassList;
+
+	void set0Position();
+
+	explicit Lawn();
 public:
-	Lawn();
-	Lawn(int grassCount);
+	Lawn(int width, int height);
+	Lawn(int width, int height, int grassCount);
 	Lawn(Lawn& lawn2);
 	Lawn(Lawn&& lawn2);
 	const Lawn& operator=(const Lawn& lawn2);
@@ -60,7 +59,7 @@ public:
 	const std::vector<Grass>& getGrassList()const;
 
 	// 不重复Point地产生Count个Grass对象
-	const Lawn& makeGrass(int grassCount = ConsoleWidth * ConsoleHeight);
+	const Lawn& makeGrass(int grassCount);
 
 	// 储存一个Grass，具有覆盖性
 	const Lawn& plantGrass(Grass& grass);
