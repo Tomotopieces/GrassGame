@@ -2,10 +2,10 @@
 #include "Grass.h"
 
 class GRASSCURSOR {
-	friend void InitGame();
+	friend const void GRASSGAME::initGame();
 public:
 	enum CursorState {
-		up,
+		bothUp,
 		leftDown,
 		rightDown,
 		bothDown,
@@ -25,3 +25,14 @@ public:
 };
 
 extern GRASSCURSOR GrassCursor;
+
+class GRASSGAME {
+private:
+	const static void initGame();
+	const static bool win();
+	const static void celebrate();
+public:
+	const static void start();
+};
+
+extern GRASSGAME GrassGame;
