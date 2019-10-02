@@ -66,7 +66,7 @@ Grass::Grass(const int x, const int y, const int Count)
 	setPic();
 }
 
-Grass& Grass::operator=(const Grass grass2)
+Grass& Grass::operator=(const Grass& grass2)
 {
 	point = grass2.point;
 	count = grass2.count;
@@ -123,7 +123,7 @@ Lawn::Lawn(Lawn&& lawn2)
 	lawn2.~Lawn();
 }
 
-const Lawn& Lawn::operator=(Lawn lawn2)
+const Lawn& Lawn::operator=(const Lawn& lawn2)
 {
 	setMap(lawn2);
 	setWidth(lawn2.getWidth());

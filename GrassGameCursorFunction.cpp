@@ -1,6 +1,4 @@
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
 #include "GrassGameCursorFunction.h"
 
 GRASSCURSOR::CursorState GRASSCURSOR::lastStatus = GRASSCURSOR::CursorState::up;
@@ -23,6 +21,17 @@ const GRASSCURSOR::CursorState GRASSCURSOR::getLastCursorState()
 	return lastStatus;
 }
 
+const Lawn& GRASSCURSOR::getCurrentLawn()
+{
+	return currentLawn;
+}
+
+const Lawn& GRASSCURSOR::setCurrentLawn(const Lawn& lawn2)
+{
+	currentLawn = lawn2;
+	return currentLawn;
+}
+
 void GRASSCURSOR::JudgeCommand()
 {
 	updateCrusorState();
@@ -42,13 +51,3 @@ void GRASSCURSOR::JudgeCommand()
 }
 
 GRASSCURSOR GrassCursor;
-
-void InitGame()
-{
-	srand((unsigned)time(NULL));
-	Screen.setSize(ConsoleWidth, ConsoleHeight);
-	Screen.hideScrollBar();
-	Screen.setTitle("Grass Game!");
-	Cursor.hide();
-	GrassCursor.currentLawn = Lawn(40);
-}

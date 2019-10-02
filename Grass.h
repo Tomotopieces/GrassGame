@@ -36,7 +36,7 @@ public:
 
 	Grass(const Point pos, const int Count);
 	Grass(const int x, const int y, const int Count);
-	Grass& operator=(const Grass grass2);
+	Grass& operator=(const Grass& grass2);
 
 	Point getPosition();
 	const int getCount()const;
@@ -55,7 +55,7 @@ public:
 	Lawn(int grassCount);
 	Lawn(Lawn& lawn2);
 	Lawn(Lawn&& lawn2);
-	const Lawn& operator=(Lawn lawn2);
+	const Lawn& operator=(const Lawn& lawn2);
 
 	const std::vector<Grass>& getGrassList()const;
 

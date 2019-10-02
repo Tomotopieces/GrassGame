@@ -17,9 +17,11 @@ public:
 
 	const static CursorState updateCrusorState();
 	const static CursorState getLastCursorState();
+	const static Lawn& getCurrentLawn();
+
+	const static Lawn& setCurrentLawn(const Lawn& lawn2);
+
 	static void JudgeCommand();
 };
 
 extern GRASSCURSOR GrassCursor;
-
-void InitGame();
