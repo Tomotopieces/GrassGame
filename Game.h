@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <ctime>
+#include <cstdlib>
 #include "ConsoleFunc.h"
 #pragma comment(lib, "ConsoleFunc.lib")
 using namespace ConsoleFunction;
@@ -79,13 +81,13 @@ GameMap<T>::GameMap(const int Width, const int Height)
 
 template<typename T>
 GameMap<T>::GameMap(const GameMap& Map2)
-	: Map(std::vector<std::vector<T>>(Map2.width, std::vector<T>(Map2.height))), width(Map2.width), height(Map2.height)
+	: Map(Map2.Map), width(Map2.width), height(Map2.height)
 {
 }
 
 template<typename T>
 GameMap<T>::GameMap(GameMap&& Map2)
-	: Map(std::vector<std::vector<T>>(Map2.width, std::vector<T>(Map2.height))), width(Map2.width), height(Map2.height)
+	: Map(Map2.Map), width(Map2.width), height(Map2.height)
 {
 	Map2.~Map();
 }

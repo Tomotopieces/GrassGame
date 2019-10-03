@@ -1,7 +1,6 @@
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
 #include "Grass.h"
+#include "GrassGameData.h"
 #include "ConsoleFunc.h"
 #pragma comment(lib, "ConsoleFunc.lib")
 using namespace ConsoleFunction;
@@ -11,9 +10,9 @@ void Grass::setPic()
 	if (count == 0)
 		grassPic = " ";
 	if (count == 1)
-		grassPic = GrassPic1[rand() % GrassPic1.size()];
+		grassPic = GameData::GrassPic1[rand() % GameData::GrassPic1.size()];
 	if (count == 2)
-		grassPic = GrassPic2[rand() % GrassPic2.size()];
+		grassPic = GameData::GrassPic2[rand() % GameData::GrassPic2.size()];
 }
 
 Grass::Grass() {
@@ -103,11 +102,18 @@ void Lawn::set0Position()
 {
 	for (int x = 0; x < getWidth(); ++x)
 		for (int y = 0; y < getHeight(); ++y)
-			This[x][y] = Grass(x, y, 0);
+			if(This[x][y].getCount() == 0)
+				This[x][y] = Grass(x, y, 0);
 }
 
 Lawn::Lawn(const int width, const int height)
 	:GameMap<Grass>(width, height)
+{
+	set0Position();
+}
+
+Lawn::Lawn(const int width, const int height, const std::vector<Grass> GrassList)
+	:GameMap(width, height), grassList(GrassList)
 {
 	set0Position();
 }

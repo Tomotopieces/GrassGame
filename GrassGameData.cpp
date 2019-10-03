@@ -1,5 +1,9 @@
 #include "GrassGameData.h"
 
+const std::vector<std::string> GameData::GrassPic1 = { "/", "\\", "`", "~", "-", "^" };
+const std::vector<std::string> GameData::GrassPic2 = { "v", "V", "y", "Y", ">", "#" };
+
+
 StageData::StageData(const int GrassCount)
 	:dataType(false), grassCount(GrassCount)
 {
@@ -39,9 +43,30 @@ const StageData& StageData::operator=(const StageData& data2)
 	return*this;
 }
 
+const StageData& StageData::operator=(const Lawn& lawn2)
+{
+	lawn = lawn2;
+	return*this;
+}
+
 const bool StageData::operator==(const StageData& data2)
 {
 	if (dataType)
 		return grassCount == data2.grassCount;
 	return lawn == data2.lawn;
 }
+
+const bool StageData::getDataType() const
+{
+	return dataType;
+}
+
+StageData::operator Lawn() const
+{
+	if (dataType)
+		return lawn;
+	else
+		return Lawn(GameData::ConsoleWidth, GameData::ConsoleHeight, grassCount);
+}
+
+Location welcome = Lawn(GameData::ConsoleWidth, GameData::ConsoleHeight, 5);

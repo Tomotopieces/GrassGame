@@ -52,7 +52,7 @@ const int Point::getY() const
 
 const bool Point::exist() const
 {
-	return x == -1 || y == -1;
+	return x != -1 || y != -1;
 }
 
 const bool Point::operator==(const Point& pos2) const

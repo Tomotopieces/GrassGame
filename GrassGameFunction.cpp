@@ -1,6 +1,4 @@
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
 #include "GrassGameFunction.h"
 #include "GrassGameData.h"
 
@@ -85,18 +83,17 @@ const void GRASSGAMEFUNCTION::judgeCommand()
 
 const void GRASSGAMEFUNCTION::centered(std::string text, int offsetX, int offsetY)
 {
-	Cursor.setPosition((ConsoleWidth - text.size()) / 2 + offsetX, ConsoleHeight / 2 + offsetY);
+	Cursor.setPosition((GameData::ConsoleWidth - text.size()) / 2 + offsetX, GameData::ConsoleHeight / 2 + offsetY);
 	std::cout << text;
 }
 
 const void GRASSGAMEFUNCTION::initGame()
 {
-	srand((unsigned)time(NULL));
-	Screen.setSize(ConsoleWidth, ConsoleHeight);
+	Screen.setSize(GameData::ConsoleWidth, GameData::ConsoleHeight);
 	Screen.hideScrollBar();
 	Screen.setTitle("Grass Game!");
 	Cursor.hide();
-	currentLawn = Lawn(ConsoleWidth, ConsoleHeight, GrassCount);
+	currentLawn = welcome;
 	Point pos(1, 2);
 }
 

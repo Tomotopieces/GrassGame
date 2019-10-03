@@ -3,9 +3,6 @@
 #include <vector>
 #include "Game.h"
 
-const std::vector<std::string> GrassPic1 = { "/", "\\", "`", "~", "-", "^" };
-const std::vector<std::string> GrassPic2 = { "v", "V", "y", "Y", ">", "#" };
-
 //²Ý
 class Grass {
 private:
@@ -55,6 +52,7 @@ private:
 
 public:
 	Lawn(const int width, const int height);
+	Lawn(const int width, const int height, const std::vector<Grass> GrassList);
 	Lawn(const int width, const int height, const int grassCount);
 	Lawn(const Lawn& lawn2);
 	Lawn(Lawn&& lawn2);

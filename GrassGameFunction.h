@@ -3,10 +3,6 @@
 
 static class GRASSGAMEFUNCTION {
 public:
-	const static int ConsoleWidth = 64;
-	const static int ConsoleHeight = 18;
-	const static int GrassCount = 20;
-
 	enum CursorState {
 		bothUp,
 		leftDown,
@@ -14,6 +10,7 @@ public:
 		bothDown,
 	};
 private:
+
 	static Lawn currentLawn;
 	static Point lastPos;
 	static CursorState lastStatus;
@@ -35,6 +32,7 @@ private:
 
 	const static void centered(std::string text, int offsetX = 0, int offsetY = 0);
 public:
+	GRASSGAMEFUNCTION() { srand((unsigned)time(NULL)); }
 
 	const static void start();
 };
