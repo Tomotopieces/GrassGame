@@ -32,7 +32,6 @@ private:
 
 	const static void centered(std::string text, int offsetX = 0, int offsetY = 0);
 public:
-	GRASSGAMEFUNCTION() { srand((unsigned)time(NULL)); }
 
 	const static void start();
 };

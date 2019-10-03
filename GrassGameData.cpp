@@ -1,8 +1,7 @@
 #include "GrassGameData.h"
 
-const std::vector<std::string> GameData::GrassPic1 = { "/", "\\", "`", "~", "-", "^" };
-const std::vector<std::string> GameData::GrassPic2 = { "v", "V", "y", "Y", ">", "#" };
-
+const std::vector<std::string> GrassGameData::GrassPic1 = { "/", "\\", "`", "~", "-", "^" };
+const std::vector<std::string> GrassGameData::GrassPic2 = { "v", "V", "y", "Y", ">", "#" };
 
 StageData::StageData(const int GrassCount)
 	:dataType(false), grassCount(GrassCount)
@@ -66,7 +65,7 @@ StageData::operator Lawn() const
 	if (dataType)
 		return lawn;
 	else
-		return Lawn(GameData::ConsoleWidth, GameData::ConsoleHeight, grassCount);
+		return Lawn(GrassGameData::ConsoleWidth, GrassGameData::ConsoleHeight, grassCount);
 }
 
-Location welcome = Lawn(GameData::ConsoleWidth, GameData::ConsoleHeight, 5);
+Location welcome = Lawn(GrassGameData::ConsoleWidth, GrassGameData::ConsoleHeight, 5);

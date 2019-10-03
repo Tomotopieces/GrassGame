@@ -1,5 +1,15 @@
 #include "Game.h"
 
+int Rand()
+{
+	static bool Seed = false;
+	if (!Seed) {
+		Seed = true;
+		srand((unsigned)time(NULL));
+	}
+	return rand();
+}
+
 Point::Point()
 	:x(0), y(0)
 {
@@ -67,6 +77,6 @@ const bool Point::operator!=(const Point& pos2) const
 
 void Point::ReSet(const int MaxWidth, const int MaxHeight)
 {
-	x = rand() % MaxWidth;
-	y = rand() % MaxHeight;
+	x = Rand() % MaxWidth;
+	y = Rand() % MaxHeight;
 }

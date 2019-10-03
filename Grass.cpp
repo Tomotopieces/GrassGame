@@ -10,9 +10,9 @@ void Grass::setPic()
 	if (count == 0)
 		grassPic = " ";
 	if (count == 1)
-		grassPic = GameData::GrassPic1[rand() % GameData::GrassPic1.size()];
+		grassPic = GrassGameData::GrassPic1[Rand() % GrassGameData::GrassPic1.size()];
 	if (count == 2)
-		grassPic = GameData::GrassPic2[rand() % GameData::GrassPic2.size()];
+		grassPic = GrassGameData::GrassPic2[Rand() % GrassGameData::GrassPic2.size()];
 }
 
 Grass::Grass() {
@@ -35,14 +35,14 @@ Grass::Grass(Grass&& grass2)
 Grass::Grass(const Point pos)
 	:point(pos)
 {
-	count = rand() % 2 + 1;
+	count = Rand() % 2 + 1;
 	setPic();
 }
 
 Grass::Grass(const int x, const int y)
 	:point(x, y)
 {
-	count = rand() % 2 + 1;
+	count = Rand() % 2 + 1;
 	setPic();
 }
 
@@ -102,8 +102,8 @@ void Lawn::set0Position()
 {
 	for (int x = 0; x < getWidth(); ++x)
 		for (int y = 0; y < getHeight(); ++y)
-			if(This[x][y].getCount() == 0)
-				This[x][y] = Grass(x, y, 0);
+			if (This[x][y].getCount() == 0)
+				This.setPoint(x, y, Grass(x, y, 0));
 }
 
 Lawn::Lawn(const int width, const int height)
@@ -167,7 +167,7 @@ const Lawn& Lawn::makeGrass(int grassCount)
 {
 	for (int i = 0; i < grassCount; ++i)
 	{
-		Grass grass(rand() % getWidth(), rand() % getHeight(), rand() % 2 + 1);
+		Grass grass(Rand() % getWidth(), Rand() % getHeight(), Rand() % 2 + 1);
 		if(grassList.size())
 			for (auto it = grassList.begin(); it != grassList.end(); ++it) {
 				if (it->getPosition() == grass.getPosition()) {
@@ -184,8 +184,8 @@ const Lawn& Lawn::plantGrass(Grass& grass)
 {
 	if (grass.getPosition().exist()) {
 		grassList.push_back(grass);
-		grass.Draw();
-		This[grass.getPosition()] = grass;
+		This.setPoint(grass.getPosition(), grass);
+		This.setPoint(grass.getPosition(), grass);
 	}
 	return This;
 }
@@ -195,7 +195,7 @@ const Lawn& Lawn::unmakeGrass(Point pos)
 	if (pos.exist() && This[pos].getCount() == 0)
 		return This;
 	grassList.erase(std::find(grassList.begin(), grassList.end(), Grass(pos, This[pos].getCount())));
-	This[pos] = Grass(pos, 0);
+	This.setPoint(pos, Grass(pos, 0));
 	This[pos].Draw();
 	return This;
 }
@@ -206,7 +206,7 @@ const Lawn& Lawn::unmakeGrass(Grass& grass)
 		return This;
 	Point pos = find(grass);
 	grassList.erase(std::find(grassList.begin(), grassList.end(), grass));
-	This[pos] = Grass(pos, 0);
+	This.setPoint(pos, Grass(pos, 0));
 	This[pos].Draw();
 	return This;
 }

@@ -3,7 +3,7 @@
 #include <vector>
 #include "Game.h"
 
-//草
+// GameElement
 class Grass {
 private:
 	//草的位置
@@ -38,16 +38,19 @@ public:
 	const int getCount()const;
 	const std::string getGrassPic()const;
 
+	// 绘制一棵草
 	void Draw()const;
 };
 
-//草坪
+// GrassMap
 class Lawn :public GameMap<Grass> {
 private:
+	// 草的列表
 	std::vector<Grass> grassList;
 
 	Lawn& This = *this;
 
+	// 给Count为0的地设置坐标
 	void set0Position();
 
 public:

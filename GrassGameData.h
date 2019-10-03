@@ -1,7 +1,7 @@
 #pragma once
 #include "Grass.h"
 
-class GameData {
+static class GrassGameData {
 public:
 	const static int ConsoleWidth = 96;
 	const static int ConsoleHeight = 27;

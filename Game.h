@@ -6,6 +6,8 @@
 #pragma comment(lib, "ConsoleFunc.lib")
 using namespace ConsoleFunction;
 
+int Rand();
+
 // 2D Map Point
 class Point {
 private:
@@ -50,9 +52,9 @@ public:
 	virtual const bool operator==(const GameMap<T>& Map2)const;
 	virtual const bool operator!=(const GameMap<T>& Map2)const;
 
-	// get & set
-	std::vector<T>& operator[](const int x);
-	T operator[](const Point pos);
+	// get, not set
+	const std::vector<T>& operator[](const int x)const;
+	const T operator[](const Point pos)const;
 	
 	// get
 	const int getWidth()const;
@@ -118,13 +120,13 @@ inline const bool GameMap<T>::operator!=(const GameMap<T>& Map2) const
 }
 
 template<typename T>
-inline std::vector<T>& GameMap<T>::operator[](const int x)
+inline const std::vector<T>& GameMap<T>::operator[](const int x) const
 {
 	return Map[x];
 }
 
 template<typename T>
-inline T GameMap<T>::operator[](const Point pos)
+inline const T GameMap<T>::operator[](const Point pos) const
 {
 	if(pos.exist())
 		return getPoint(pos);

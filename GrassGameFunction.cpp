@@ -2,6 +2,7 @@
 #include "GrassGameFunction.h"
 #include "GrassGameData.h"
 
+// Initialization
 GRASSGAMEFUNCTION::CursorState GRASSGAMEFUNCTION::lastStatus = GRASSGAMEFUNCTION::CursorState::bothUp;
 Point GRASSGAMEFUNCTION::lastPos = Point(Mouse.getPosition());
 Lawn GRASSGAMEFUNCTION::currentLawn = Lawn(0,0,0);
@@ -83,18 +84,18 @@ const void GRASSGAMEFUNCTION::judgeCommand()
 
 const void GRASSGAMEFUNCTION::centered(std::string text, int offsetX, int offsetY)
 {
-	Cursor.setPosition((GameData::ConsoleWidth - text.size()) / 2 + offsetX, GameData::ConsoleHeight / 2 + offsetY);
+	Cursor.setPosition((GrassGameData::ConsoleWidth - text.size()) / 2 + offsetX, GrassGameData::ConsoleHeight / 2 + offsetY);
 	std::cout << text;
 }
 
 const void GRASSGAMEFUNCTION::initGame()
 {
-	Screen.setSize(GameData::ConsoleWidth, GameData::ConsoleHeight);
+	Screen.setSize(GrassGameData::ConsoleWidth, GrassGameData::ConsoleHeight);
 	Screen.hideScrollBar();
 	Screen.setTitle("Grass Game!");
 	Cursor.hide();
 	currentLawn = welcome;
-	Point pos(1, 2);
+	currentLawn.Draw();
 }
 
 const bool GRASSGAMEFUNCTION::win()
