@@ -15,40 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Grass.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GrassGameFunction.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="GrassGameData.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ConsoleFunc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Grass.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GrassGameFunction.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GrassGameData.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="README.MD">
       <Filter>资源文件</Filter>
     </None>
@@ -61,10 +27,47 @@
     <None Include="Release and dll\GrassGame 0.2.exe">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="Release and dll\GrassGame 0.3.exe">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="GrassGame.gif">
       <Filter>资源文件</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GrassGame\Game.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassGame\Grass.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassGame\GrassGameData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassGame\GrassGameFunction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassGame\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GrassGame\ConsoleFunc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassGame\Game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassGame\Grass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassGame\GrassGameData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassGame\GrassGameFunction.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

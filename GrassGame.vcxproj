@@ -123,27 +123,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GrassGameData.cpp" />
-    <ClCompile Include="Grass.cpp" />
-    <ClCompile Include="GrassGameFunction.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ConsoleFunc.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GrassGameData.h" />
-    <ClInclude Include="Grass.h" />
-    <ClInclude Include="GrassGameFunction.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="README.MD" />
     <None Include="Release and dll\ConsoleFunc.dll" />
     <None Include="Release and dll\GrassGame 0.1.exe" />
     <None Include="Release and dll\GrassGame 0.2.exe" />
+    <None Include="Release and dll\GrassGame 0.3.exe" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="GrassGame.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GrassGame\Game.cpp" />
+    <ClCompile Include="GrassGame\Grass.cpp" />
+    <ClCompile Include="GrassGame\GrassGameData.cpp" />
+    <ClCompile Include="GrassGame\GrassGameFunction.cpp" />
+    <ClCompile Include="GrassGame\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GrassGame\ConsoleFunc.h" />
+    <ClInclude Include="GrassGame\Game.h" />
+    <ClInclude Include="GrassGame\Grass.h" />
+    <ClInclude Include="GrassGame\GrassGameData.h" />
+    <ClInclude Include="GrassGame\GrassGameFunction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
