@@ -1,14 +1,15 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-#include "GrassGame.h"
+#include "GrassGameFunction.h"
+#include "GrassGameData.h"
 
-GRASSGAME::CursorState GRASSGAME::lastStatus = GRASSGAME::CursorState::bothUp;
-Point GRASSGAME::lastPos = Point(Mouse.getPosition());
-Lawn GRASSGAME::currentLawn = Lawn(0,0,0);
-time_t GRASSGAME::timer = time(NULL);
+GRASSGAMEFUNCTION::CursorState GRASSGAMEFUNCTION::lastStatus = GRASSGAMEFUNCTION::CursorState::bothUp;
+Point GRASSGAMEFUNCTION::lastPos = Point(Mouse.getPosition());
+Lawn GRASSGAMEFUNCTION::currentLawn = Lawn(0,0,0);
+time_t GRASSGAMEFUNCTION::timer = time(NULL);
 
-const GRASSGAME::CursorState GRASSGAME::updateCrusorState()
+const GRASSGAMEFUNCTION::CursorState GRASSGAMEFUNCTION::updateCrusorState()
 {
 	if (Mouse.leftDown())
 		lastStatus = leftDown;
@@ -20,17 +21,17 @@ const GRASSGAME::CursorState GRASSGAME::updateCrusorState()
 	return lastStatus;
 }
 
-const GRASSGAME::CursorState GRASSGAME::getLastCursorState()
+const GRASSGAMEFUNCTION::CursorState GRASSGAMEFUNCTION::getLastCursorState()
 {
 	return lastStatus;
 }
 
-const Lawn& GRASSGAME::getCurrentLawn()
+const Lawn& GRASSGAMEFUNCTION::getCurrentLawn()
 {
 	return currentLawn;
 }
 
-const void GRASSGAME::cursorStyle()
+const void GRASSGAMEFUNCTION::cursorStyle()
 {
 	if (lastPos == Mouse.getPosition())
 		return;
@@ -42,13 +43,13 @@ const void GRASSGAME::cursorStyle()
 	currentLawn.getPoint(lastPos).Draw();
 }
 
-const Lawn& GRASSGAME::setCurrentLawn(const Lawn& lawn2)
+const Lawn& GRASSGAMEFUNCTION::setCurrentLawn(const Lawn& lawn2)
 {
 	currentLawn = lawn2;
 	return currentLawn;
 }
 
-const void GRASSGAME::judgeCommand()
+const void GRASSGAMEFUNCTION::judgeCommand()
 {
 	switch (lastStatus) {
 		case bothUp:
@@ -82,13 +83,13 @@ const void GRASSGAME::judgeCommand()
 	}
 }
 
-const void GRASSGAME::centered(std::string text, int offsetX, int offsetY)
+const void GRASSGAMEFUNCTION::centered(std::string text, int offsetX, int offsetY)
 {
 	Cursor.setPosition((ConsoleWidth - text.size()) / 2 + offsetX, ConsoleHeight / 2 + offsetY);
 	std::cout << text;
 }
 
-const void GRASSGAME::initGame()
+const void GRASSGAMEFUNCTION::initGame()
 {
 	srand((unsigned)time(NULL));
 	Screen.setSize(ConsoleWidth, ConsoleHeight);
@@ -96,14 +97,15 @@ const void GRASSGAME::initGame()
 	Screen.setTitle("Grass Game!");
 	Cursor.hide();
 	currentLawn = Lawn(ConsoleWidth, ConsoleHeight, GrassCount);
+	Point pos(1, 2);
 }
 
-const bool GRASSGAME::win()
+const bool GRASSGAMEFUNCTION::win()
 {
 	return currentLawn.getGrassList().size() == 0;
 }
 
-const void GRASSGAME::celebrate()
+const void GRASSGAMEFUNCTION::celebrate()
 {
 	Character.setBackColor(0);
 	Cursor.setPosition(lastPos.getX(), lastPos.getY());
@@ -113,15 +115,15 @@ const void GRASSGAME::celebrate()
 	centered("Press any key to exit.", 0, 1);
 }
 
-const void GRASSGAME::start()
+const void GRASSGAMEFUNCTION::start()
 {
 	initGame();
-	while (!GrassGame.win()) {
+	while (!GrassGameFunction.win()) {
 		cursorStyle();
 		judgeCommand();
 	}
-	GrassGame.celebrate();
+	GrassGameFunction.celebrate();
 	getchar();
 }
 
-GRASSGAME GrassGame;
+GRASSGAMEFUNCTION GrassGameFunction;

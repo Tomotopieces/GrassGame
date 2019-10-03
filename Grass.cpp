@@ -17,7 +17,7 @@ void Grass::setPic()
 }
 
 Grass::Grass() {
-	point = Point(0, 0);
+	point = Point(-1, -1);
 	count = 0;
 	grassPic = " ";
 }
@@ -67,6 +67,16 @@ Grass& Grass::operator=(const Grass& grass2)
 	return*this;
 }
 
+const bool Grass::operator==(const Grass& grass)const
+{
+	return point == grass.point && count == grass.count;	//不判断图案是否一样
+}
+
+const bool Grass::operator!=(const Grass& grass) const
+{
+	return !operator==(grass);
+}
+
 Point Grass::getPosition()const
 {
 	return point;
@@ -82,11 +92,6 @@ const std::string Grass::getGrassPic() const
 	return grassPic;
 }
 
-const bool Grass::operator==(const Grass& grass)const
-{
-	return point == grass.point && count == grass.count;
-}
-
 void Grass::Draw()const
 {
 	Cursor.setPosition(point.getX(), point.getY());
@@ -96,27 +101,25 @@ void Grass::Draw()const
 
 void Lawn::set0Position()
 {
-	for (int x = 0; x < getWidth(); ++x) {
-		for (int y = 0; y < getHeight(); ++y) {
-			setPoint(x, y, Grass(x, y, 0));
-		}
-	}
+	for (int x = 0; x < getWidth(); ++x)
+		for (int y = 0; y < getHeight(); ++y)
+			This[x][y] = Grass(x, y, 0);
 }
 
-Lawn::Lawn(int width, int height)
+Lawn::Lawn(const int width, const int height)
 	:GameMap<Grass>(width, height)
 {
 	set0Position();
 }
 
-Lawn::Lawn(int width, int height, int grassCount)
+Lawn::Lawn(const int width, const int height, const int grassCount)
 	:GameMap<Grass>(width, height)
 {
 	set0Position();
 	makeGrass(grassCount);
 }
 
-Lawn::Lawn(Lawn& lawn2)
+Lawn::Lawn(const Lawn& lawn2)
 	:GameMap(lawn2), grassList(lawn2.grassList)
 {
 }
@@ -129,11 +132,24 @@ Lawn::Lawn(Lawn&& lawn2)
 
 const Lawn& Lawn::operator=(const Lawn& lawn2)
 {
-	setMap(lawn2);
-	setWidth(lawn2.getWidth());
-	setHeight(lawn2.getHeight());
+	GameMap::operator=(lawn2);
 	grassList = lawn2.grassList;
-	return*this;
+	return This;
+}
+
+const bool Lawn::operator==(const Lawn& lawn2)const
+{
+	if (grassList.size() != lawn2.grassList.size())
+		return false;
+	for (int i = 0; i < grassList.size(); ++i)
+		if (grassList[i] != lawn2.grassList[i])
+			return false;
+	return true;
+}
+
+const bool Lawn::operator!=(const Lawn& lawn2)const
+{
+	return !operator==(lawn2);
 }
 
 const std::vector<Grass>& Lawn::getGrassList() const
@@ -155,52 +171,43 @@ const Lawn& Lawn::makeGrass(int grassCount)
 			}
 		plantGrass(grass);
 	}
-	return*this;
+	return This;
 }
 
 const Lawn& Lawn::plantGrass(Grass& grass)
 {
-	grassList.push_back(grass);
-	grass.Draw();
-	this->setPoint(grass.getPosition(), grass);
-	return*this;
+	if (grass.getPosition().exist()) {
+		grassList.push_back(grass);
+		grass.Draw();
+		This[grass.getPosition()] = grass;
+	}
+	return This;
 }
 
 const Lawn& Lawn::unmakeGrass(Point pos)
 {
-	if (this->getPoint(pos).getCount() == 0)
-		return*this;
-	for (auto it = grassList.begin(); it != grassList.end(); ++it) {
-		if (it->getPosition() == pos) {
-			grassList.erase(it);
-			break;
-		}
-	}
-	this->setPoint(pos, Grass(pos, 0));
-	getPoint(pos).Draw();
-	return*this;
+	if (pos.exist() && This[pos].getCount() == 0)
+		return This;
+	grassList.erase(std::find(grassList.begin(), grassList.end(), Grass(pos, This[pos].getCount())));
+	This[pos] = Grass(pos, 0);
+	This[pos].Draw();
+	return This;
 }
 
-const Lawn& Lawn::unmakeGrass(Grass& grass, bool all)
+const Lawn& Lawn::unmakeGrass(Grass& grass)
 {
-	if (grass.getCount() == 0)
-		return*this;
-	for (auto it = grassList.begin(); it != grassList.end(); ++it) {
-		if (*it == grass) {
-			grassList.erase(it);
-			if (!all)
-				break;
-		}
-	}
-	Point pos = grass.getPosition();
-	this->setPoint(pos, Grass(pos, 0));
-	getPoint(pos).Draw();
-	return*this;
+	if (grass.getPosition().exist() && grass.getCount() == 0)
+		return This;
+	Point pos = find(grass);
+	grassList.erase(std::find(grassList.begin(), grassList.end(), grass));
+	This[pos] = Grass(pos, 0);
+	This[pos].Draw();
+	return This;
 }
 
 const Lawn& Lawn::Draw() const
 {
 	for (Grass grass : grassList)
 		grass.Draw();
-	return*this;
+	return This;
 }

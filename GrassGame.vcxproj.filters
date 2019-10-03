@@ -24,7 +24,10 @@
     <ClCompile Include="Game.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="GrassGame.cpp">
+    <ClCompile Include="GrassGameFunction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassGameData.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +41,10 @@
     <ClInclude Include="Game.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GrassGame.h">
+    <ClInclude Include="GrassGameFunction.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassGameData.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

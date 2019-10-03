@@ -1,6 +1,6 @@
-#include "GrassGame.h"
+#include "GrassGameFunction.h"
 
 int main() {
-	GrassGame.start();
+	GrassGameFunction.start();
 	return 0;
 }

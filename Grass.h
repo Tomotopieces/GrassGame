@@ -31,30 +31,36 @@ public:
 
 	Grass(const Point pos, const int Count);
 	Grass(const int x, const int y, const int Count);
-	Grass& operator=(const Grass& grass2);
 
+	Grass& operator=(const Grass& grass2);
+	const bool operator==(const Grass& grass)const;
+	const bool operator!=(const Grass& grass)const;
+
+	// get
 	Point getPosition()const;
 	const int getCount()const;
 	const std::string getGrassPic()const;
 
-	const bool operator==(const Grass& grass)const;
-
 	void Draw()const;
 };
 
+//草坪
 class Lawn :public GameMap<Grass> {
 private:
 	std::vector<Grass> grassList;
 
+	Lawn& This = *this;
+
 	void set0Position();
 
-	explicit Lawn();
 public:
-	Lawn(int width, int height);
-	Lawn(int width, int height, int grassCount);
-	Lawn(Lawn& lawn2);
+	Lawn(const int width, const int height);
+	Lawn(const int width, const int height, const int grassCount);
+	Lawn(const Lawn& lawn2);
 	Lawn(Lawn&& lawn2);
 	const Lawn& operator=(const Lawn& lawn2);
+	const bool operator==(const Lawn& lawn2)const;
+	const bool operator!=(const Lawn& lawn2)const;
 
 	const std::vector<Grass>& getGrassList()const;
 
@@ -67,8 +73,9 @@ public:
 	// 按Point消除Grass
 	const Lawn& unmakeGrass(Point pos);
 
-	// 消除完全一样的Grass，all为false时只消除一个
-	const Lawn& unmakeGrass(Grass& grass, bool all = true);
+	// 消除完全一样的Grass
+	const Lawn& unmakeGrass(Grass& grass);
 
+	// 绘制整个草坪
 	const Lawn& Draw()const;
 };

@@ -4,7 +4,7 @@
 #pragma comment(lib, "ConsoleFunc.lib")
 using namespace ConsoleFunction;
 
-//坐标
+// 2D Map Point
 class Point {
 private:
 	int x;
@@ -15,23 +15,22 @@ public:
 	Point(const COORD& pos2);
 	Point(Point&& pos2);
 	Point(const int X, const int Y);
-	Point& operator=(const Point& pos2);
-	Point& operator=(const COORD& pos2);
+	const Point& operator=(const Point& pos2);
+	const Point& operator=(const COORD& pos2);
+	const bool operator==(const Point& pos2)const;
+	const bool operator!=(const Point& pos2)const;
 
 	const int getX()const;
 	const int getY()const;
 
-	//同位置判定
-	const bool operator==(const Point& pos2)const;
-
-	//重骰坐标
+	const bool exist()const;
 	void ReSet(const int MaxWidth, const int MaxHeight);
 };
 
 //****************************************
 //****************************************
 
-//二维地图
+// 2D Map
 template<typename T>
 class GameMap {
 	friend class GameFunction;
@@ -45,21 +44,31 @@ public:
 	GameMap(const int width, const int height);
 	GameMap(const GameMap& Map2);
 	GameMap(GameMap&& Map2);
-	const GameMap<T>& operator=(const GameMap<T>& Map2);
+	virtual const GameMap<T>& operator=(const GameMap<T>& Map2);
+	virtual const bool operator==(const GameMap<T>& Map2)const;
+	virtual const bool operator!=(const GameMap<T>& Map2)const;
+
+	// get & set
+	std::vector<T>& operator[](const int x);
+	T operator[](const Point pos);
 	
+	// get
 	const int getWidth()const;
 	const int getHeight()const;
-
 	const std::vector<std::vector<T>> getMap()const;
 	const T& getPoint(const int x, const int y)const;
 	const T& getPoint(const Point pos)const;
 
+	// set
 	const GameMap<T>& setWidth(const int Width);
 	const GameMap<T>& setHeight(const int Height);
-
 	const GameMap<T>& setMap(const GameMap<T>& Map2);
 	const GameMap<T>& setPoint(const int x, const int y, const T& Data2);
 	const GameMap<T>& setPoint(Point pos, const T& Data2);
+
+	// others
+	const Point find(T& data2)const;
+	const std::vector<Point> findAll(T& data2)const;
 };
 
 template<typename T>
@@ -88,6 +97,36 @@ const GameMap<T>& GameMap<T>::operator=(const GameMap<T>& Map2)
 	width = Map2.width;
 	height = Map2.height;
 	return*this;
+}
+
+template<typename T>
+inline const bool GameMap<T>::operator==(const GameMap<T>& Map2)const
+{
+	for (int x = 0; x < width; ++x)
+		for (int y = 0; y < height; ++y)
+			if (getPoint(x, y) != Map2.getPoint(x, y))
+				return false;
+	return true;
+}
+
+template<typename T>
+inline const bool GameMap<T>::operator!=(const GameMap<T>& Map2) const
+{
+	return !operator==(Map2);
+}
+
+template<typename T>
+inline std::vector<T>& GameMap<T>::operator[](const int x)
+{
+	return Map[x];
+}
+
+template<typename T>
+inline T GameMap<T>::operator[](const Point pos)
+{
+	if(pos.exist())
+		return getPoint(pos);
+	return T();
 }
 
 template<typename T>
@@ -159,5 +198,23 @@ const GameMap<T>& GameMap<T>::setPoint(Point pos, const T& Data2)
 	return*this;
 }
 
-//****************************************
-//****************************************
+template<typename T>
+inline const Point GameMap<T>::find(T& data2) const
+{
+	for (int x = 0; x < width; ++x)
+		for (int y = 0; y < height; ++y)
+			if (getPoint(x, y) != data2)
+				return Point(x, y);
+	return Point(-1, -1);
+}
+
+template<typename T>
+inline const std::vector<Point> GameMap<T>::findAll(T& data2) const
+{
+	std::vector<Point> list;
+	for (int x = 0; x < width++; x)
+		for (int y = 0; y < height; ++y)
+			if (getPoint(x, y) != data2)
+				list.push_back(Point(x, y));
+	return list;
+}

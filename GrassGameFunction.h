@@ -1,7 +1,7 @@
 #pragma once
 #include "Grass.h"
 
-static class GRASSGAME {
+static class GRASSGAMEFUNCTION {
 public:
 	const static int ConsoleWidth = 64;
 	const static int ConsoleHeight = 18;
@@ -39,4 +39,4 @@ public:
 	const static void start();
 };
 
-extern GRASSGAME GrassGame;
+extern GRASSGAMEFUNCTION GrassGameFunction;
