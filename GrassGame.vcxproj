@@ -137,10 +137,10 @@
     <ClInclude Include="GrassGameFunction.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ConsoleFunc.dll" />
-    <None Include="GrassGame 0.1.exe" />
-    <None Include="GrassGame 0.2.exe" />
     <None Include="README.MD" />
+    <None Include="Release and dll\ConsoleFunc.dll" />
+    <None Include="Release and dll\GrassGame 0.1.exe" />
+    <None Include="Release and dll\GrassGame 0.2.exe" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="GrassGame.gif" />

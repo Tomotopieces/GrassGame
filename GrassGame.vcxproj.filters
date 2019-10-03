@@ -52,13 +52,13 @@
     <None Include="README.MD">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="ConsoleFunc.dll">
+    <None Include="Release and dll\ConsoleFunc.dll">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="GrassGame 0.1.exe">
+    <None Include="Release and dll\GrassGame 0.1.exe">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="GrassGame 0.2.exe">
+    <None Include="Release and dll\GrassGame 0.2.exe">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
