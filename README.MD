@@ -5,7 +5,7 @@
 
 拔不掉的话请多点几次，因为模拟鼠标点击的地方写的不是很好，正在寻找改进的方法。
 
-![拔草游戏](https://github.com/Tomotopieces/GrassGameFunction/blob/master/GrassGameFunction.gif "拔草游戏")
+![拔草游戏](https://raw.githubusercontent.com/Tomotopieces/GrassGame/master/GrassGame.gif "拔草游戏")
 
 ## 更新
 
