@@ -1,9 +1,9 @@
 #include <iostream>
 #include <thread>
+#include <future>
 #include <chrono>
 #include "GrassGameFunction.h"
 #include "GrassGameData.h"
-#include "ThreadPool.h"
 
 // Initialization
 std::mutex GRASSGAMEFUNCTION::GrassMutex;

@@ -69,8 +69,5 @@
     <ClInclude Include="GrassGame\GrassGameFunction.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GrassGame\ThreadPool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
