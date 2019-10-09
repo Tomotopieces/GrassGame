@@ -23,6 +23,7 @@ public:
 	const Point& operator=(const COORD& pos2);
 	const bool operator==(const Point& pos2)const;
 	const bool operator!=(const Point& pos2)const;
+	operator COORD()const;
 
 	const int getX()const;
 	const int getY()const;

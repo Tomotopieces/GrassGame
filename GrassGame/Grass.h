@@ -79,4 +79,6 @@ public:
 
 	// »æÖÆÕû¸ö²ÝÆº
 	const Lawn& Draw()const;
+	friend void DrawGrass(const Lawn& lawn, int x, int y);
+	friend void DrawGrass(const Lawn& lawn, Point pos);
 };

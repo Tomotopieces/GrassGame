@@ -217,3 +217,13 @@ const Lawn& Lawn::Draw() const
 		grass.Draw();
 	return This;
 }
+
+void DrawGrass(const Lawn& lawn, int x, int y)
+{
+	lawn[x][y].Draw();
+}
+
+void DrawGrass(const Lawn& lawn, Point pos)
+{
+	lawn[pos].Draw();
+}

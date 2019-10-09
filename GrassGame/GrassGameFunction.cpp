@@ -1,45 +1,21 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include "GrassGameFunction.h"
 #include "GrassGameData.h"
+#include "ThreadPool.h"
 
 // Initialization
-GRASSGAMEFUNCTION::CursorState GRASSGAMEFUNCTION::lastStatus = GRASSGAMEFUNCTION::CursorState::bothUp;
-Point GRASSGAMEFUNCTION::lastPos = Point(Mouse.getPosition());
+std::mutex GRASSGAMEFUNCTION::GrassMutex;
+bool GRASSGAMEFUNCTION::mouseLeftClick = false;
+bool GRASSGAMEFUNCTION::mouseRightClick = false;
+bool GRASSGAMEFUNCTION::mouseBothClick = false;
 Lawn GRASSGAMEFUNCTION::currentLawn = Lawn(0,0,0);
 time_t GRASSGAMEFUNCTION::timer = time(NULL);
-
-const GRASSGAMEFUNCTION::CursorState GRASSGAMEFUNCTION::updateCrusorState()
-{
-	if (Mouse.leftDown())
-		lastStatus = leftDown;
-	else if (Mouse.rightDown())
-		lastStatus = rightDown;
-	else if (Mouse.bothDown())
-		lastStatus = bothDown;
-	else lastStatus = bothUp;
-	return lastStatus;
-}
-
-const GRASSGAMEFUNCTION::CursorState GRASSGAMEFUNCTION::getLastCursorState()
-{
-	return lastStatus;
-}
 
 const Lawn& GRASSGAMEFUNCTION::getCurrentLawn()
 {
 	return currentLawn;
-}
-
-const void GRASSGAMEFUNCTION::cursorStyle()
-{
-	if (lastPos == Mouse.getPosition())
-		return;
-	Character.setBackColor(0);
-	currentLawn.getPoint(lastPos).Draw();
-
-	Character.setBackColor(light);
-	lastPos = Mouse.getPosition();
-	currentLawn.getPoint(lastPos).Draw();
 }
 
 const Lawn& GRASSGAMEFUNCTION::setCurrentLawn(const Lawn& lawn2)
@@ -48,47 +24,25 @@ const Lawn& GRASSGAMEFUNCTION::setCurrentLawn(const Lawn& lawn2)
 	return currentLawn;
 }
 
-const void GRASSGAMEFUNCTION::judgeCommand()
+GRASSGAMEFUNCTION::MouseState GRASSGAMEFUNCTION::getMouseState()
 {
-	switch (lastStatus) {
-		case bothUp:
-			updateCrusorState();
-			switch (lastStatus) {
-				case bothUp:
-					break;
-				case leftDown:
-					currentLawn.unmakeGrass(Mouse.getPosition());
-					break;
-				case rightDown:
-					break;
-				case bothDown:
-					break;
-				default:
-					break;
-			}
-			break;
-		case leftDown:
-			updateCrusorState();
-			break;
-		case rightDown:
-			updateCrusorState();
-			break;
-		case bothDown:
-			updateCrusorState();
-			break;
-		default:
-			updateCrusorState();
-			break;
-	}
+	std::unique_lock<std::mutex> lock(GrassMutex);
+	if (Mouse.leftDown())
+		return leftDown;
+	else if (Mouse.rightDown())
+		return rightDown;
+	else if (Mouse.bothDown())
+		return bothDown;
+	else return bothUp;
 }
 
-const void GRASSGAMEFUNCTION::centered(std::string text, int offsetX, int offsetY)
+void GRASSGAMEFUNCTION::centered(std::string text, int offsetX, int offsetY)
 {
 	Cursor.setPosition((GrassGameData::ConsoleWidth - text.size()) / 2 + offsetX, GrassGameData::ConsoleHeight / 2 + offsetY);
 	std::cout << text;
 }
 
-const void GRASSGAMEFUNCTION::initGame()
+void GRASSGAMEFUNCTION::initGame()
 {
 	Screen.setSize(GrassGameData::ConsoleWidth, GrassGameData::ConsoleHeight);
 	Screen.hideScrollBar();
@@ -103,24 +57,84 @@ const bool GRASSGAMEFUNCTION::win()
 	return currentLawn.getGrassList().size() == 0;
 }
 
-const void GRASSGAMEFUNCTION::celebrate()
+void GRASSGAMEFUNCTION::celebrate()
 {
 	Character.setBackColor(0);
-	Cursor.setPosition(lastPos.getX(), lastPos.getY());
-	std::cout << " ";
 	Character.setForeColor(white + light);
 	centered("You Win!", 0, -2);
 	centered("Press any key to exit.", 0, 1);
 }
 
-const void GRASSGAMEFUNCTION::start()
+void GRASSGAMEFUNCTION::start()
 {
 	initGame();
-	while (!GrassGameFunction.win()) {
-		cursorStyle();
-		judgeCommand();
-	}
-	GrassGameFunction.celebrate();
+	auto MousePositionThread = std::async(std::launch::async,
+		[]() {
+			Point lastPos = { 0,0 };
+			while (!win()) {
+				if (lastPos == Mouse.getPosition())
+					continue;
+				
+				Cursor.setPosition(lastPos);
+				Character.setBackColor(0);
+				currentLawn.getPoint(lastPos).Draw();
+
+				lastPos = Mouse.getPosition();
+				Character.setBackColor(white);
+				Cursor.setPosition(lastPos);
+				currentLawn.getPoint(lastPos).Draw();
+			}
+			Cursor.setPosition(lastPos);
+			Character.setBackColor(0);
+			currentLawn.getPoint(lastPos).Draw();
+		}
+	);
+	auto MouseEventThread = std::async(std::launch::async,
+		[]() {
+			auto lastState = bothUp;
+			while (!win()) {
+				switch (lastState) {
+					case leftDown:
+						lastState = getMouseState();
+						switch (lastState) {
+							case bothUp:
+								mouseLeftClick = true;
+								break;
+							case rightDown:
+								break;
+							case bothDown:
+								break;
+							default:
+								break;
+						}
+						break;
+					case rightDown:
+						lastState = getMouseState();
+						break;
+					case bothDown:
+						lastState = getMouseState();
+						break;
+					default:
+						lastState = getMouseState();
+						break;
+				}
+			}
+		}
+	);
+	auto judgeMouseEvent = std::async(std::launch::async,
+		[]() {
+			while (!win()) {
+				if (mouseLeftClick) {
+					mouseLeftClick = false;
+					currentLawn.unmakeGrass(Mouse.getPosition());
+				}
+			}
+		}
+	);
+	MousePositionThread.wait();
+	MouseEventThread.wait();
+	judgeMouseEvent.wait();
+	celebrate();
 	getchar();
 }
 

@@ -75,6 +75,11 @@ const bool Point::operator!=(const Point& pos2) const
 	return !operator==(pos2);
 }
 
+Point::operator COORD() const
+{
+	return { short(x),short(y) };
+}
+
 void Point::ReSet(const int MaxWidth, const int MaxHeight)
 {
 	x = Rand() % MaxWidth;
